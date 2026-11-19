@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudVibe | Premium Vape Store & Catalog Indonesia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            950: '#07090E',
+                            900: '#0B0F19',
+                            800: '#131A2A',
+                            700: '#1E293B',
+                        },
+                        neon: {
+                            cyan: '#06B6D4',
+                            purple: '#A855F7',
+                            amber: '#F59E0B',
+                        }
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 20px rgba(6, 182, 212, 0.35)',
+                        'neon-purple': '0 0 25px rgba(168, 85, 247, 0.35)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-950 text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-white overflow-x-hidden">
+
+    <!-- ==================== 1. AGE VERIFICATION MODAL (21+) ==================== -->
+    <div id="ageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-dark-950/95 backdrop-blur-xl p-4 transition-opacity duration-300">
+        <div class="relative w-full max-w-md rounded-3xl bg-dark-800 border border-slate-700/80 p-8 text-center shadow-2xl shadow-purple-900/20">
+            <!-- Dekorasi Glow -->
+            <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 blur-2xl opacity-50 pointer-events-none"></div>
+            
+            <div class="relative mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 to-purple-600/20 border border-cyan-500/40 text-cyan-400">
+                <span class="text-2xl font-extrabold tracking-tight">21+</span>
+            </div>
+
+            <h2 class="text-2xl font-bold text-white mb-2">Verifikasi Usia Diperlukan</h2>
+            <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                Produk di dalam website <span class="text-cyan-400 font-semibold">CloudVibe</span> mengandung nikotin dan hanya ditujukan bagi perokok dewasa atau vapers berusia <strong class="text-white">21 tahun ke atas</strong> sesuai regulasi di Indonesia.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="verifyAge(true)" class="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-semibold shadow-neon-cyan transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer">
+                    Saya Berusia 21+
+                </button>
+                <button onclick="verifyAge(false)" class="w-full py-3.5 px-5 rounded-xl bg-dark-900 hover:bg-slate-800 text-slate-300 border border-slate-700 font-medium transition-all cursor-pointer">
+                    Keluar
+                </button>
+            </div>
+            <p class="mt-4 text-[11px] text-slate-500">Dengan masuk, Anda menyetujui Syarat & Ketentuan kami.</p>
+        </div>
+    </div>
+
+    <!-- Halaman Blokir jika usia di bawah 21 -->
+    <div id="underageScreen" class="hidden fixed inset-0 z-50 flex flex-col items-center justify-center bg-dark-950 p-6 text-center">
+        <div class="p-4 rounded-full bg-red-500/10 text-red-400 mb-4 border border-red-500/30">
+            <i data-lucide="shield-alert" class="w-12 h-12"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-white mb-2">Akses Ditolak</h1>
+        <p class="text-slate-400 max-w-md mb-6">Maaf, Anda harus berusia minimal 21 tahun untuk mengakses konten dan membeli produk vape di CloudVibe.</p>
+        <button onclick="resetAgeVerification()" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm text-slate-300 transition">
+            Kembali ke Verifikasi
+        </button>
+    </div>
+
+    <!-- ==================== 2. HEADER & NAVIGATION ==================== -->
+    <header class="sticky top-0 z-40 bg-dark-950/80 backdrop-blur-lg border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 gap-4">
+                
+                <!-- Logo Brand -->
+                <a href="#beranda" class="flex items-center gap-2.5 shrink-0 group">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 text-white shadow-neon-cyan group-hover:rotate-6 transition-transform">
+                        <i data-lucide="cloud-lightning" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-cyan-200 to-purple-400 bg-clip-text text-transparent">
+                            CloudVibe
+                        </span>
+                        <span class="block text-[10px] uppercase tracking-widest text-cyan-400 font-semibold -mt-1">Vape Lounge</span>
+                    </div>
+                </a>
+
+                <!-- Menu Navigasi Desktop -->
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
+                    <a href="#beranda" class="hover:text-cyan-400 transition-colors">Beranda</a>
+                    <a href="#katalog" class="hover:text-cyan-400 transition-colors">Produk</a>
+                    <a href="#katalog" onclick="filterCategory('Mod & Pod')" class="hover:text-cyan-400 transition-colors">Kategori</a>
+                    <a href="#promo" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
+                        Promo <span class="px-1.5 py-0.5 text-[10px] font-bold rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">HOT</span>
+                    </a>
+                    <a href="#tentang" class="hover:text-cyan-400 transition-colors">Tentang Kami</a>
+                </nav>
+
+                <!-- Search Bar & Cart Button -->
+                <div class="flex items-center gap-3 flex-1 lg:flex-initial justify-end">
+                    <!-- Kolom Pencarian -->
+                    <div class="relative w-full max-w-xs hidden sm:block">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            oninput="handleSearch(this.value)"
+                            placeholder="Cari pod, liquid, coil..." 
+                            class="w-full pl-10 pr-4 py-2 rounded-xl bg-dark-800/90 border border-slate-700/80 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                        >
+                    </div>
+
+                    <!-- Tombol Keranjang -->
+                    <button onclick="toggleCart(true)" class="relative p-2.5 rounded-xl bg-dark-800 hover:bg-dark-700 border border-slate-700/80 text-slate-200 hover:text-cyan-400 transition-all cursor-pointer group">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                        <span id="cartBadge" class="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 text-[11px] font-bold text-white shadow-md">
+                            0
+                        </span>
+                    </button>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl bg-dark-800 border border-slate-700/80 text-slate-200">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search & Menu Dropdown -->
+            <div id="mobileMenu" class="hidden lg:hidden pb-4 pt-2 border-t border-slate-800/80 space-y-3">
+                <div class="relative sm:hidden">
+                    <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                    <input 
+                        type="text" 
+                        oninput="handleSearch(this.value)"
+                        placeholder="Cari produk vape..." 
+                        class="w-full pl-10 pr-4 py-2 rounded-xl bg-dark-800 border border-slate-700 text-sm text-white focus:outline-none focus:border-cyan-500"
+                    >
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-sm font-medium text-slate-300">
+                    <a href="#beranda" onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-dark-800">Beranda</a>
+                    <a href="#katalog" onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-dark-800">Semua Produk</a>
+                    <a href="#promo" onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-dark-800 text-purple-400">Promo Spesial</a>
+                    <a href="#tentang" onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-dark-800">Tentang Kami</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== 3. HERO SECTION ==================== -->
+    <section id="beranda" class="relative overflow-hidden pt-10 pb-16 lg:py-24">
+        <!-- Ambient Neon Glows -->
+        <div class="absolute top-10 left-1/4 w-96 h-96 bg-cyan-500/15 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Kolom Teks Hero -->
+                <div class="lg:col-span-7 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-dark-800/90 border border-cyan-500/30 text-cyan-400 text-xs font-semibold mb-6">
+                        <span class="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
+                        KOLEKSI TERBARU 2026 • 100% AUTHENTIC & BERCUKAI
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] mb-6">
+                        Tingkatkan Pengalaman <span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-amber-300 bg-clip-text text-transparent">Vaping</span> ke Level Berikutnya.
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+                        Temukan kurasi device Pod & Mod flagship, Liquid Freebase & Salt Nic bercukai resmi dengan cita rasa autentik, serta aksesoris original bergaransi.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#katalog" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold text-sm sm:text-base shadow-neon-cyan transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <span>Belanja Sekarang</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#promo" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-dark-800/90 hover:bg-dark-700 border border-slate-700 text-slate-200 font-semibold text-sm sm:text-base transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+                            <span>Lihat Paket Bundling</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="grid grid-cols-3 gap-4 mt-10 pt-8 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <p class="text-xl sm:text-2xl font-bold text-white">100%</p>
+                            <p class="text-xs text-slate-400">Produk Original</p>
+                        </div>
+                        <div>
+                            <p class="text-xl sm:text-2xl font-bold text-cyan-400">Resmi</p>
+                            <p class="text-xs text-slate-400">Pita Cukai 2026</p>
+                        </div>
+                        <div>
+                            <p class="text-xl sm:text-2xl font-bold text-purple-400">Same Day</p>
+                            <p class="text-xs text-slate-400">Pengiriman Cepat</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Ilustrasi Produk Vape Modern (Custom SVG & Glass Card) -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <!-- Kartu Showcase 3D-like -->
+                        <div class="relative rounded-3xl bg-gradient-to-b from-dark-800/90 to-dark-900/95 border border-slate-700/70 p-8 shadow-2xl backdrop-blur-md">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-bold">
+                                    FLAGSHIP DEVICE
+                                </span>
+                                <span class="text-xs text-slate-400 font-mono">MAX 80W • OLED</span>
+                            </div>
+
+                            <!-- Custom Vector Illustration Modern Vape Pod Mod -->
+                            <div class="my-4 flex justify-center items-center py-4 relative">
+                                <div class="absolute w-48 h-48 bg-gradient-to-tr from-cyan-500/30 to-purple-600/30 rounded-full blur-2xl"></div>
+                                <svg viewBox="0 0 240 280" class="w-56 h-64 relative z-10 drop-shadow-[0_15px_25px_rgba(6,182,212,0.3)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Drip Tip -->
+                                    <path d="M102 22C102 17.5817 105.582 14 110 14H130C134.418 14 138 17.5817 138 22V44H102V22Z" fill="#1E293B" stroke="#38BDF8" stroke-width="2"/>
+                                    <!-- Tank / Cartridge Transparan -->
+                                    <rect x="86" y="44" width="68" height="52" rx="10" fill="url(#tankGrad)" stroke="#94A3B8" stroke-width="2"/>
+                                    <!-- Liquid Level di dalam tank -->
+                                    <path d="M88 66H152V88C152 92.4183 148.418 96 144 96H96C91.5817 96 88 92.4183 88 88V66Z" fill="url(#liquidGrad)" fill-opacity="0.75"/>
+                                    <!-- Coil Core -->
+                                    <rect x="110" y="48" width="20" height="46" rx="3" fill="#CBD5E1" fill-opacity="0.4" stroke="#E2E8F0" stroke-width="1.5"/>
+                                    <!-- Body Mod Utama -->
+                                    <rect x="74" y="96" width="92" height="164" rx="22" fill="url(#bodyGrad)" stroke="url(#borderGrad)" stroke-width="2.5"/>
+                                    <!-- Layar OLED -->
+                                    <rect x="96" y="122" width="48" height="82" rx="8" fill="#07090E" stroke="#334155" stroke-width="1.5"/>
+                                    <!-- Tampilan UI pada Layar OLED -->
+                                    <text x="120" y="152" fill="#22D3EE" font-family="monospace" font-size="18" font-weight="bold" text-anchor="middle">65W</text>
+                                    <text x="120" y="168" fill="#A855F7" font-family="monospace" font-size="8" text-anchor="middle">0.18 Ω • 3.8V</text>
+                                    <!-- Battery Bar -->
+                                    <rect x="106" y="180" width="28" height="8" rx="2" stroke="#22D3EE" stroke-width="1.2"/>
+                                    <rect x="108" y="182" width="21" height="4" rx="1" fill="#22D3EE"/>
+                                    <!-- Fire Button -->
+                                    <circle cx="120" cy="228" r="12" fill="#1E293B" stroke="#A855F7" stroke-width="2"/>
+                                    <circle cx="120" cy="228" r="5" fill="#22D3EE"/>
+                                    <!-- Vapor Cloud Accents -->
+                                    <circle cx="62" cy="40" r="14" fill="#22D3EE" fill-opacity="0.12"/>
+                                    <circle cx="178" cy="65" r="20" fill="#A855F7" fill-opacity="0.15"/>
+                                    <defs>
+                                        <linearGradient id="tankGrad" x1="86" y1="44" x2="154" y2="96" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#334155" stop-opacity="0.6"/>
+                                            <stop offset="1" stop-color="#0F172A" stop-opacity="0.8"/>
+                                        </linearGradient>
+                                        <linearGradient id="liquidGrad" x1="88" y1="66" x2="152" y2="96" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#F59E0B"/>
+                                            <stop offset="1" stop-color="#D97706"/>
+                                        </linearGradient>
+                                        <linearGradient id="bodyGrad" x1="74" y1="96" x2="166" y2="260" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#1E293B"/>
+                                            <stop offset="1" stop-color="#0B0F19"/>
+                                        </linearGradient>
+                                        <linearGradient id="borderGrad" x1="74" y1="96" x2="166" y2="260" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#06B6D4"/>
+                                            <stop offset="1" stop-color="#A855F7"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-700/60">
+                                <div>
+                                    <h3 class="font-bold text-white text-lg">Aether X Pro 80W</h3>
+                                    <p class="text-xs text-slate-400">Dual Mesh Coil • Fast Charging</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-xs text-slate-400 line-through block">Rp 550.000</span>
+                                    <span class="text-lg font-extrabold text-cyan-400">Rp 465.000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROMO BANNER STRIP ==================== -->
+    <section id="promo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <div class="rounded-3xl bg-gradient-to-r from-dark-800 via-purple-950/40 to-dark-800 border border-purple-500/30 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div class="flex items-center gap-4 z-10">
+                <div class="hidden sm:flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400">
+                    <i data-lucide="zap" class="w-7 h-7"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Promo Akhir Pekan</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white mt-0.5">Gratis Ongkir & Bonus Cotton Organik</h2>
+                    <p class="text-sm text-slate-300 mt-1">Untuk setiap pembelian minimal Rp 300.000 semua varian Liquid & Device.</p>
+                </div>
+            </div>
+            <button onclick="filterCategory('Liquid Freebase'); document.getElementById('katalog').scrollIntoView();" class="shrink-0 px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold shadow-neon-purple transition cursor-pointer z-10">
+                Eksplor Liquid
+            </button>
+        </div>
+    </section>
+
+    <!-- ==================== 4 & 5. FILTER KATEGORI & KATALOG PRODUK ==================== -->
+    <section id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        
+        <!-- Header Katalog & Filter -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Katalog Produk Pilihan</h2>
+                <p class="text-sm text-slate-400 mt-1">Pilih perangkat dan liquid favorit Anda dengan kualitas terjamin.</p>
+            </div>
+            <div class="text-sm text-slate-400">
+                Menampilkan <span id="productCount" class="text-cyan-400 font-bold">0</span> produk
+            </div>
+        </div>
+
+        <!-- Tab Filter Kategori -->
+        <div id="categoryFilters" class="flex items-center gap-2.5 overflow-x-auto pb-4 mb-8 no-scrollbar">
+            <!-- Tombol kategori akan dirender secara dinamis via JS -->
+        </div>
+
+        <!-- Grid Produk -->
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Kartu produk dirender via JavaScript -->
+        </div>
+
+        <!-- State Kosong jika pencarian tidak ditemukan -->
+        <div id="emptyState" class="hidden text-center py-16 bg-dark-800/40 rounded-3xl border border-slate-800">
+            <i data-lucide="search-x" class="w-12 h-12 text-slate-500 mx-auto mb-3"></i>
+            <h3 class="text-lg font-bold text-white">Produk tidak ditemukan</h3>
+            <p class="text-sm text-slate-400 mt-1 mb-5">Coba gunakan kata kunci lain atau reset filter kategori.</p>
+            <button onclick="resetFilters()" class="px-5 py-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 text-sm font-semibold hover:bg-cyan-500/30 transition cursor-pointer">
+                Tampilkan Semua Produk
+            </button>
+        </div>
+
+    </section>
+
+    <!-- ==================== TENTANG KAMI (KEUNGGULAN) ==================== -->
+    <section id="tentang" class="border-t border-slate-800/80 bg-dark-900/50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-6 rounded-2xl bg-dark-800/60 border border-slate-800">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center mb-4">
+                        <i data-lucide="badge-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">100% Authentic & Bercukai</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Seluruh liquid dilengkapi pita cukai resmi Indonesia dan device memiliki kode otentikasi resmi pabrikan.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-dark-800/60 border border-slate-800">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center mb-4">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Garansi Tukar Unit Baru</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Perlindungan garansi toko 7 hari tukar baru untuk cacat pabrik pada pembelian Mod & Pod System.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-dark-800/60 border border-slate-800">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center mb-4">
+                        <i data-lucide="headphones" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Konsultasi Vapemaster</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Bingung memilih ohm coil atau kadar nikotin yang pas? Tim kami siap membantu rekomendasi terbaik.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 8. FOOTER & PERINGATAN KESEHATAN NIKOTIN ==================== -->
+    <footer class="bg-dark-950 border-t border-slate-800 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Kotak Peringatan Kesehatan Nikotin -->
+            <div class="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 shrink-0">
+                    <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                </div>
+                <div class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <strong class="text-amber-400 uppercase tracking-wide block mb-0.5">Peringatan Kesehatan (21+ Only):</strong>
+                    Produk ini mengandung <strong>nikotin</strong>. Nikotin adalah zat kimia yang menyebabkan ketergantungan. Dilarang menjual atau memberikan kepada anak di bawah usia 21 tahun dan ibu hamil atau menyusui.
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-800/80 text-sm">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i data-lucide="cloud-lightning" class="w-6 h-6 text-cyan-400"></i>
+                        <span class="text-xl font-extrabold text-white">CloudVibe Indonesia</span>
+                    </div>
+                    <p class="text-slate-400 max-w-md leading-relaxed">
+                        Destinasi gaya hidup vaping modern di Jakarta & seluruh Indonesia. Menghadirkan perangkat berkualitas tinggi dan rasa liquid terbaik.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-3">Kategori</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#katalog" onclick="filterCategory('Mod & Pod')" class="hover:text-cyan-400 transition">Mod & Pod System</a></li>
+                        <li><a href="#katalog" onclick="filterCategory('Liquid Freebase')" class="hover:text-cyan-400 transition">Liquid Freebase</a></li>
+                        <li><a href="#katalog" onclick="filterCategory('Liquid Salt Nic')" class="hover:text-cyan-400 transition">Liquid Salt Nic</a></li>
+                        <li><a href="#katalog" onclick="filterCategory('Coil & Cartridge')" class="hover:text-cyan-400 transition">Coil & Cartridge</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-3">Layanan Pelanggan</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li>Senin - Minggu: 10.00 - 22.00 WIB</li>
+                        <li>Jakarta Selatan, Indonesia</li>
+                        <li class="text-cyan-400">support@cloudvibe.id</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 CloudVibe Vape Store. Hak Cipta Dilindungi.</p>
+                <p>Khusus Dewasa 21+ • Vaping Responsibly</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== 6. MODAL DETAIL PRODUK ==================== -->
+    <div id="productModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-dark-950/85 backdrop-blur-md p-4 overflow-y-auto">
+        <div class="relative w-full max-w-2xl rounded-3xl bg-dark-800 border border-slate-700 shadow-2xl overflow-hidden my-8">
+            <!-- Tombol Close -->
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 p-2 rounded-xl bg-dark-900/80 hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div id="modalContent" class="grid md:grid-cols-2">
+                <!-- Konten modal dirender dinamis via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 7. KERANJANG BELANJA (SLIDE-OVER DRAWER) ==================== -->
+    <div id="cartDrawerOverlay" onclick="toggleCart(false)" class="hidden fixed inset-0 z-50 bg-dark-950/75 backdrop-blur-sm transition-opacity"></div>
+    
+    <aside id="cartDrawer" class="fixed top-0 right-0 z-50 h-full w-full max-w-md bg-dark-900 border-l border-slate-800 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Header Drawer -->
+        <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <i data-lucide="shopping-bag" class="w-5 h-5 text-cyan-400"></i>
+                <h2 class="text-lg font-bold text-white">Keranjang Belanja</h2>
+                <span id="drawerItemCount" class="px-2 py-0.5 text-xs font-bold rounded-full bg-cyan-500/20 text-cyan-400">0</span>
+            </div>
+            <button onclick="toggleCart(false)" class="p-2 rounded-xl hover:bg-dark-800 text-slate-400 hover:text-white transition cursor-pointer">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- Daftar Item Keranjang -->
+        <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Item dirender via JS -->
+        </div>
+
+        <!-- Footer Drawer & Checkout -->
+        <div id="cartFooter" class="p-6 border-t border-slate-800 bg-dark-950/60 space-y-4">
+            <div class="space-y-1.5 text-sm">
+                <div class="flex justify-between text-slate-400">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">Rp 0</span>
+                </div>
+                <div class="flex justify-between text-slate-400">
+                    <span>Estimasi Ongkir</span>
+                    <span id="cartShipping" class="text-cyan-400 font-medium">Gratis</span>
+                </div>
+                <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-slate-800">
+                    <span>Total Pembayaran</span>
+                    <span id="cartTotal" class="text-cyan-400 text-lg">Rp 0</span>
+                </div>
+            </div>
+
+            <button onclick="processCheckout()" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold shadow-neon-cyan transition-all flex items-center justify-center gap-2 cursor-pointer">
+                <i data-lucide="credit-card" class="w-5 h-5"></i>
+                <span>Checkout Sekarang</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ==================== MODAL SIMULASI CHECKOUT BERHASIL ==================== -->
+    <div id="checkoutModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-dark-950/85 backdrop-blur-md p-4">
+        <div class="w-full max-w-md rounded-3xl bg-dark-800 border border-cyan-500/40 p-8 text-center shadow-2xl">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+                <i data-lucide="check-circle-2" class="w-9 h-9"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">Pesanan Berhasil Dibuat!</h3>
+            <p class="text-sm text-slate-300 mb-4">
+                Terima kasih telah berbelanja di <span class="text-cyan-400 font-semibold">CloudVibe</span>. Nomor invoice simulasi Anda adalah:
+            </p>
+            <div id="invoiceCode" class="py-2.5 px-4 rounded-xl bg-dark-900 border border-slate-700 font-mono text-cyan-400 font-bold text-sm mb-6">
+                #INV-CV-202688
+            </div>
+            <button onclick="closeCheckoutModal()" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold hover:opacity-90 transition cursor-pointer">
+                Lanjut Belanja
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-dark-800 border border-cyan-500/50 text-white text-sm font-medium shadow-neon-cyan">
+            <i data-lucide="check-circle" class="w-4 h-4 text-cyan-400"></i>
+            <span id="toastMessage">Produk ditambahkan ke keranjang</span>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // 1. DATA KATALOG PRODUK VAPE
+        const products = [
+            {
+                id: 1,
+                name: "Aether X Pro 80W Pod Mod",
+                category: "Mod & Pod",
+                price: 465000,
+                rating: 4.9,
+                reviews: 128,
+                badge: "Best Seller",
+                accentColor: "from-cyan-500 to-blue-600",
+                icon: "cpu",
+                specs: {
+                    capacity: "2500mAh Built-in Battery",
+                    nicotine: "Kompatibel Freebase & Salt Nic",
+                    flavor: "Output 5W - 80W (USB-C Fast Charge)"
+                },
+                description: "Pod Mod flagship dengan chipset pintar anti-dry hit, layar OLED berwarna, dan airflow presisi untuk cloud tebal maupun MTL."
+            },
+            {
+                id: 2,
+                name: "VapeNesia Nebula Pod Kit",
+                category: "Mod & Pod",
+                price: 245000,
+                rating: 4.8,
+                reviews: 94,
+                badge: "Baru",
+                accentColor: "from-purple-500 to-indigo-600",
+                icon: "smartphone-charging",
+                specs: {
+                    capacity: "1000mAh • Cartridge 2ml",
+                    nicotine: "Rekomendasi Salt Nic & Pods Friendly",
+                    flavor: "Auto-Draw & Button Fire"
+                },
+                description: "Desain ultra-ringan berbahan aerospace aluminum dengan lampu indikator neon RGB yang elegan untuk penggunaan harian."
+            },
+            {
+                id: 3,
+                name: "Tokyo Banana Cheesecake 60ml",
+                category: "Liquid Freebase",
+                price: 145000,
+                rating: 4.9,
+                reviews: 215,
+                badge: "Cukai 2026",
+                accentColor: "from-amber-400 to-orange-600",
+                icon: "droplet",
+                specs: {
+                    capacity: "60ml Chubby Gorilla Bottle",
+                    nicotine: "3mg / 6mg Freebase",
+                    flavor: "Creamy Banana, Soft Cheesecake, Vanilla"
+                },
+                description: "Perpaduan lembut bolu pisang Jepang dengan krim keju manis yang gurih dan tidak bikin enek di tenggorokan."
+            },
+            {
+                id: 4,
+                name: "Arctic Lychee Freeze 60ml",
+                category: "Liquid Freebase",
+                price: 135000,
+                rating: 4.7,
+                reviews: 87,
+                badge: "Fruity Dingin",
+                accentColor: "from-cyan-400 to-teal-500",
+                icon: "snowflake",
+                specs: {
+                    capacity: "60ml • VG/PG 70:30",
+                    nicotine: "3mg / 6mg Freebase",
+                    flavor: "Sweet Leci Segar + Sensasi Ice Dingin"
+                },
+                description: "Kesegaran buah leci matang dengan sensasi dingin kristal yang menyegarkan setiap hisapan di cuaca tropis."
+            },
+            {
+                id: 5,
+                name: "Oat Drips V1 Saltnic 30ml",
+                category: "Liquid Salt Nic",
+                price: 115000,
+                rating: 4.9,
+                reviews: 310,
+                badge: "Favorit",
+                accentColor: "from-amber-500 to-yellow-600",
+                icon: "flame",
+                specs: {
+                    capacity: "30ml • VG/PG 50:50",
+                    nicotine: "30mg Salt Nicotine",
+                    flavor: "Sereal Oat Susu Hangat"
+                },
+                description: "Liquid legendaris sereal gandum dengan susu segar yang memberikan throat hit halus dan rasa manis yang pas."
+            },
+            {
+                id: 6,
+                name: "Purple Berry Ice Salt 30ml",
+                category: "Liquid Salt Nic",
+                price: 110000,
+                rating: 4.8,
+                reviews: 142,
+                badge: "Cukai 2026",
+                accentColor: "from-fuchsia-500 to-purple-600",
+                icon: "grape",
+                specs: {
+                    capacity: "30ml • VG/PG 50:50",
+                    nicotine: "25mg / 35mg Salt Nicotine",
+                    flavor: "Anggur Hitam, Blueberry & Mint"
+                },
+                description: "Kombinasi buah beri ungu pekat dengan sensasi dingin yang seimbang, sangat ramah untuk ketahanan cartridge pod."
+            },
+            {
+                id: 7,
+                name: "Aether Mesh Cartridge (Isi 3)",
+                category: "Coil & Cartridge",
+                price: 95000,
+                rating: 4.8,
+                reviews: 76,
+                badge: "Original",
+                accentColor: "from-slate-500 to-cyan-600",
+                icon: "layers",
+                specs: {
+                    capacity: "3ml Side-Fill System (1 Box = 3 Pcs)",
+                    nicotine: "Resistansi 0.6Ω & 0.8Ω",
+                    flavor: "Anti-Leak Technology 4 Lapis"
+                },
+                description: "Cartridge pengganti original dengan teknologi mesh generasi terbaru untuk memaksimalkan flavor dan umur pemakaian."
+            },
+            {
+                id: 8,
+                name: "CloudMaster Organic Cotton & Tool Kit",
+                category: "Aksesoris",
+                price: 85000,
+                rating: 4.7,
+                reviews: 53,
+                badge: "Lengkap",
+                accentColor: "from-emerald-500 to-teal-700",
+                icon: "wrench",
+                specs: {
+                    capacity: "1 Pack Cotton + Pinset Keramik + Gunting",
+                    nicotine: "100% Unbleached Organic Cotton",
+                    flavor: "Daya Serap Tinggi Tanpa Rasa Kapas"
+                },
+                description: "Paket perlengkapan wajib pengguna RDA/RTA untuk wicking cepat, rapi, dan menghasilkan rasa liquid paling murni."
+            }
+        ];
+
+        const categories = [
+            "Semua",
+            "Mod & Pod",
+            "Liquid Freebase",
+            "Liquid Salt Nic",
+            "Coil & Cartridge",
+            "Aksesoris"
+        ];
+
+        // 2. STATE APLIKASI
+        let activeCategory = "Semua";
+        let searchQuery = "";
+        let cart = [];
+        let modalQuantity = 1;
+
+        // 3. FORMAT RUPIAH
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(number);
+        }
+
+        // 4. VERIFIKASI USIA (21+)
+        function verifyAge(isAdult) {
+            const ageModal = document.getElementById('ageModal');
+            const underageScreen = document.getElementById('underageScreen');
+
+            if (isAdult) {
+                sessionStorage.setItem('cloudvibe_verified_21', 'true');
+                ageModal.classList.add('opacity-0');
+                setTimeout(() => {
+                    ageModal.classList.add('hidden');
+                }, 300);
+            } else {
+                ageModal.classList.add('hidden');
+                underageScreen.classList.remove('hidden');
+            }
+        }
+
+        function resetAgeVerification() {
+            document.getElementById('underageScreen').classList.add('hidden');
+            const ageModal = document.getElementById('ageModal');
+            ageModal.classList.remove('hidden', 'opacity-0');
+        }
+
+        // 5. RENDER FILTER KATEGORI
+        function renderCategories() {
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = categories.map(cat => {
+                const isActive = activeCategory === cat;
+                return `
+                    <button 
+                        onclick="filterCategory('${cat}')"
+                        class="px-5 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                            isActive 
+                            ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-neon-cyan' 
+                            : 'bg-dark-800 hover:bg-dark-700 text-slate-300 border border-slate-700/80'
+                        }"
+                    >
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function filterCategory(category) {
+            activeCategory = category;
+            renderCategories();
+            renderProducts();
+        }
+
+        function handleSearch(query) {
+            searchQuery = query.toLowerCase().trim();
+            renderProducts();
+        }
+
+        function resetFilters() {
+            activeCategory = "Semua";
+            searchQuery = "";
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.value = "";
+            renderCategories();
+            renderProducts();
+        }
+
+        // 6. RENDER KATALOG PRODUK
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const emptyState = document.getElementById('emptyState');
+            const countEl = document.getElementById('productCount');
+
+            const filtered = products.filter(p => {
+                const matchCat = activeCategory === "Semua" || p.category === activeCategory;
+                const matchSearch = p.name.toLowerCase().includes(searchQuery) || 
+                                    p.category.toLowerCase().includes(searchQuery) ||
+                                    p.specs.flavor.toLowerCase().includes(searchQuery);
+                return matchCat && matchSearch;
+            });
+
+            countEl.textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                emptyState.classList.remove('hidden');
+                lucide.createIcons();
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(product => `
+                <div class="group rounded-2xl bg-dark-800/80 border border-slate-800 hover:border-cyan-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden hover:shadow-xl hover:shadow-cyan-950/30 hover:-translate-y-1">
+                    <div>
+                        <!-- Visual Produk Header -->
+                        <div class="relative h-44 bg-gradient-to-br ${product.accentColor} p-6 flex items-center justify-center overflow-hidden">
+                            <div class="absolute inset-0 bg-dark-950/45"></div>
+                            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-dark-950/80 backdrop-blur-md text-[11px] font-bold text-cyan-300 border border-white/10">
+                                ${product.badge}
+                            </span>
+                            
+                            <!-- Ikon Ilustrasi Produk -->
+                            <div class="relative z-10 w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                                <i data-lucide="${product.icon}" class="w-10 h-10"></i>
+                            </div>
+                        </div>
+
+                        <!-- Info Produk -->
+                        <div class="p-5">
+                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1.5">
+                                <span class="text-purple-400 font-medium">${product.category}</span>
+                                <span class="flex items-center gap-1 text-amber-400 font-semibold">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                                    ${product.rating} <span class="text-slate-500 font-normal">(${product.reviews})</span>
+                                </span>
+                            </div>
+
+                            <h3 class="font-bold text-white text-base leading-snug mb-2 group-hover:text-cyan-400 transition-colors line-clamp-1">
+                                ${product.name}
+                            </h3>
+
+                            <p class="text-xs text-slate-400 line-clamp-2 mb-4">
+                                ${product.specs.flavor}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Harga & Tombol Aksi -->
+                    <div class="px-5 pb-5 pt-2 border-t border-slate-800/80">
+                        <div class="mb-3">
+                            <span class="text-lg font-extrabold text-white">${formatRupiah(product.price)}</span>
+                        </div>
+                        <div class="grid grid-cols-5 gap-2">
+                            <button 
+                                onclick="openProductModal(${product.id})"
+                                class="col-span-2 py-2.5 px-3 rounded-xl bg-dark-900 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition cursor-pointer"
+                            >
+                                Detail
+                            </button>
+                            <button 
+                                onclick="addToCart(${product.id}, 1)"
+                                class="col-span-3 py-2.5 px-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                            >
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                <span>Keranjang</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        // 7. MODAL DETAIL PRODUK
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            modalQuantity = 1;
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+
+            content.innerHTML = `
+                <!-- Kolom Kiri Visual -->
+                <div class="bg-gradient-to-br ${product.accentColor} p-8 flex flex-col items-center justify-center relative min-h-[260px]">
+                    <div class="absolute inset-0 bg-dark-950/40"></div>
+                    <div class="relative z-10 w-28 h-28 rounded-3xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-2xl mb-4">
+                        <i data-lucide="${product.icon}" class="w-14 h-14"></i>
+                    </div>
+                    <span class="relative z-10 px-3 py-1 rounded-full bg-dark-950/75 text-cyan-300 text-xs font-bold border border-white/10">
+                        ${product.category} • ${product.badge}
+                    </span>
+                </div>
+
+                <!-- Kolom Kanan Spesifikasi -->
+                <div class="p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-1.5 text-amber-400 text-xs font-bold mb-2">
+                            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                            <span>${product.rating} / 5.0</span>
+                            <span class="text-slate-400 font-normal">(${product.reviews} ulasan terverifikasi)</span>
+                        </div>
+
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-white mb-2">${product.name}</h2>
+                        <p class="text-2xl font-extrabold text-cyan-400 mb-4">${formatRupiah(product.price)}</p>
+
+                        <p class="text-sm text-slate-300 leading-relaxed mb-5">
+                            ${product.description}
+                        </p>
+
+                        <!-- Tabel Spesifikasi -->
+                        <div class="space-y-2.5 bg-dark-900/90 p-4 rounded-2xl border border-slate-700/80 text-xs mb-6">
+                            <div class="flex justify-between gap-2">
+                                <span class="text-slate-400">Kapasitas / Ukuran:</span>
+                                <span class="text-white font-semibold text-right">${product.specs.capacity}</span>
+                            </div>
+                            <div class="flex justify-between gap-2 border-t border-slate-800 pt-2">
+                                <span class="text-slate-400">Kadar Nikotin / Tipe:</span>
+                                <span class="text-purple-400 font-semibold text-right">${product.specs.nicotine}</span>
+                            </div>
+                            <div class="flex justify-between gap-2 border-t border-slate-800 pt-2">
+                                <span class="text-slate-400">Profil Rasa / Fitur:</span>
+                                <span class="text-cyan-400 font-semibold text-right">${product.specs.flavor}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kontrol Jumlah & Tambah Keranjang -->
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center bg-dark-900 border border-slate-700 rounded-xl p-1">
+                            <button onclick="updateModalQty(-1)" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-800 text-slate-300 cursor-pointer">-</button>
+                            <span id="modalQtyDisplay" class="w-10 text-center font-bold text-white text-sm">1</span>
+                            <button onclick="updateModalQty(1)" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-800 text-slate-300 cursor-pointer">+</button>
+                        </div>
+
+                        <button 
+                            onclick="addToCart(${product.id}, modalQuantity); closeProductModal();"
+                            class="flex-1 py-3.5 px-5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold text-sm shadow-neon-cyan transition cursor-pointer flex items-center justify-center gap-2"
+                        >
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                            <span>Tambah ke Keranjang</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function updateModalQty(delta) {
+            modalQuantity = Math.max(1, modalQuantity + delta);
+            document.getElementById('modalQtyDisplay').textContent = modalQuantity;
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        // 8. KERANJANG BELANJA (CART LOGIC)
+        function addToCart(productId, qty = 1) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += qty;
+            } else {
+                cart.push({ ...product, quantity: qty });
+            }
+
+            updateCartUI();
+            showToast(`${product.name} (${qty}x) ditambahkan!`);
+        }
+
+        function changeCartQty(productId, delta) {
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            if (itemIndex === -1) return;
+
+            cart[itemIndex].quantity += delta;
+            if (cart[itemIndex].quantity <= 0) {
+                cart.splice(itemIndex, 1);
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal >= 300000 || subtotal === 0 ? 0 : 15000;
+            const total = subtotal + shipping;
+
+            // Update Badge
+            document.getElementById('cartBadge').textContent = totalItems;
+            document.getElementById('drawerItemCount').textContent = `${totalItems} item`;
+
+            const container = document.getElementById('cartItemsContainer');
+            const footer = document.getElementById('cartFooter');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center py-12">
+                        <div class="w-16 h-16 rounded-2xl bg-dark-800 flex items-center justify-center text-slate-500 mb-4">
+                            <i data-lucide="shopping-cart" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1">Keranjang Masih Kosong</h3>
+                        <p class="text-xs text-slate-400 max-w-xs mb-5">Yuk pilih mod, pod, atau liquid favoritmu dari katalog kami.</p>
+                        <button onclick="toggleCart(false)" class="px-5 py-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 text-xs font-bold hover:bg-cyan-500/30 transition cursor-pointer">
+                            Mulai Belanja
+                        </button>
+                    </div>
+                `;
+                footer.classList.add('hidden');
+            } else {
+                footer.classList.remove('hidden');
+                container.innerHTML = cart.map(item => `
+                    <div class="flex gap-3.5 p-3.5 rounded-2xl bg-dark-800/90 border border-slate-800">
+                        <div class="w-16 h-16 rounded-xl bg-gradient-to-br ${item.accentColor} flex items-center justify-center text-white shrink-0">
+                            <i data-lucide="${item.icon}" class="w-7 h-7"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start gap-2">
+                                <h4 class="text-sm font-bold text-white truncate">${item.name}</h4>
+                                <button onclick="removeFromCart(${item.id})" class="text-slate-500 hover:text-red-400 transition cursor-pointer" title="Hapus">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5">${formatRupiah(item.price)}</p>
+                            
+                            <div class="flex items-center justify-between mt-2.5">
+                                <div class="flex items-center bg-dark-900 rounded-lg border border-slate-700">
+                                    <button onclick="changeCartQty(${item.id}, -1)" class="w-7 h-7 text-xs text-slate-300 hover:text-white cursor-pointer">-</button>
+                                    <span class="w-7 text-center text-xs font-bold text-white">${item.quantity}</span>
+                                    <button onclick="changeCartQty(${item.id}, 1)" class="w-7 h-7 text-xs text-slate-300 hover:text-white cursor-pointer">+</button>
+                                </div>
+                                <span class="text-xs font-bold text-slate-200">${formatRupiah(item.price * item.quantity)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('cartSubtotal').textContent = formatRupiah(subtotal);
+            document.getElementById('cartShipping').textContent = shipping === 0 ? "Gratis" : formatRupiah(shipping);
+            document.getElementById('cartTotal').textContent = formatRupiah(total);
+
+            lucide.createIcons();
+        }
+
+        function toggleCart(open) {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartDrawerOverlay');
+
+            if (open) {
+                overlay.classList.remove('hidden');
+                drawer.classList.remove('translate-x-full');
+            } else {
+                overlay.classList.add('hidden');
+                drawer.classList.add('translate-x-full');
+            }
+        }
+
+        // 9. SIMULASI CHECKOUT
+        function processCheckout() {
+            if (cart.length === 0) return;
+
+            toggleCart(false);
+            const randomNum = Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('invoiceCode').textContent = `#INV-CV-${randomNum}`;
+            document.getElementById('checkoutModal').classList.remove('hidden');
+
+            // Kosongkan keranjang setelah simulasi selesai
+            cart = [];
+            updateCartUI();
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        // 10. TOAST & MOBILE MENU
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 2600);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // INISIALISASI SAAT HALAMAN DIMUAT
+        window.addEventListener('DOMContentLoaded', () => {
+            // Cek jika user sudah verifikasi usia dalam sesi ini
+            if (sessionStorage.getItem('cloudvibe_verified_21') === 'true') {
+                document.getElementById('ageModal').classList.add('hidden');
+            }
+
+            renderCategories();
+            renderProducts();
+            updateCartUI();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
